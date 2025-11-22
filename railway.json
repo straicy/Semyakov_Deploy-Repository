@@ -1,17 +1,6 @@
 {
   "$schema": "https://railway.app/railway.schema.json",
-  "build": {
-    "builder": "nixpacks",
-    "nixpacks": {
-      "phases": {
-        "install": "dotnet restore ./CarSharing.API/CarSharing.API.csproj",
-        
-        "build": "dotnet publish ./CarSharing.API/CarSharing.API.csproj -c Release -o /app/publish"
-      },
-      "start": "dotnet /app/publish/CarSharing.API.dll"
-    }
-  },
   "deploy": {
-    "startCommand": "dotnet /app/publish/CarSharing.API.dll"
+    "startCommand": "dotnet /app/publish/MyWebApi.dll"
   }
 }
