@@ -3,19 +3,24 @@ name: Railway CD Pipeline
 
 on:
   push:
-    branches: [ "main" ] # Запускаємо при пуші в гілку main
+    branches: [ "main" ] # Використовуйте "main", оскільки ти його використовуєш
 
 jobs:
   deploy_to_railway:
     runs-on: ubuntu-latest
+
     steps:
-    - uses: actions/checkout@v4 # 1. Витягуємо код
-    
-    # 2. Використовуємо найновішу версію Railway Action
-    - name: Deploy to Railway
-      uses: railwayapp/railway-action@v4 # <--- ОНОВЛЕННЯ ВЕРСІЇ
-      with:
-        # railwayToken: оновлена назва параметра
-        railwayToken: ${{ secrets.RAILWAY_TOKEN }}
-        # projectId: оновлена назва параметра
-        projectId: ${{ secrets.RAILWAY_PROJECT_ID }}
+      - name: Checkout Repository
+        uses: actions/checkout@v4 # 1. Витягуємо код
+
+      # Кроки Setup .NET та Install Railway CLI ВИКЛЮЧЕНІ, 
+      # оскільки ми використовуємо офіційний Action для Docker деплою
+      
+      - name: Deploy to Railway (via Dockerfile)
+        # Використовуємо найстабільнішу версію Railway Action
+        uses: railwayapp/railway-action@v3 
+        with:
+          # Секрети, які ти вже налаштував:
+          railwayToken: ${{ secrets.RAILWAY_TOKEN }}
+          projectId: ${{ secrets.RAILWAY_PROJECT_ID }}
+          # НЕ ТРЕБА ВКАЗУВАТИ SERVICE_ID або DOMAIN, Action знайде це сам
