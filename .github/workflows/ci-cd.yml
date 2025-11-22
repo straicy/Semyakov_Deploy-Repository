@@ -1,5 +1,5 @@
 # .github/workflows/ci-cd.yml
-name: Railway CD Pipeline (CLI Final Attempt)
+name: Railway CD Pipeline (Final Solution with Service Link)
 
 on:
   push:
@@ -13,21 +13,23 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      # 1. Налаштування Node.js для встановлення CLI
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
 
-      # 2. Встановлення Railway CLI глобально
       - name: Install Railway CLI
         run: npm install -g @railway/cli
 
-      # 3. Деплой за допомогою CLI
-      # Використовуємо лише 'up --ci' та передаємо обидва секрета через env
+      # 3. Прив'язка до Сервісу
+      # Ми використовуємо Service ID для однозначного визначення цілі
+      - name: Link to Service ID
+        run: railway link --service ${{ secrets.RAILWAY_SERVICE_ID }}
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }} 
+          
+      # 4. Деплой
       - name: Deploy to Railway
         run: railway up --ci
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
-          RAILWAY_PROJECT_ID: ${{ secrets.RAILWAY_PROJECT_ID }}
-          RAILWAY_SERVICE_ID: ${{ secrets.RAILWAY_SERVICE_ID }}
