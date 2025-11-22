@@ -11,9 +11,9 @@ jobs:
     steps:
     - uses: actions/checkout@v4 # 1. Витягуємо код
     
-    # 2. Використовуємо актуальну Railway Action (замість застарілої cli-action)
+    # 2. Використовуємо найновішу версію Railway Action
     - name: Deploy to Railway
-      uses: railwayapp/railway-action@v3 # Використовуємо актуальний Action
+      uses: railwayapp/railway-action@v4 # <--- ОНОВЛЕННЯ ВЕРСІЇ
       with:
         # railwayToken: оновлена назва параметра
         railwayToken: ${{ secrets.RAILWAY_TOKEN }}
