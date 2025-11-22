@@ -3,7 +3,6 @@
   "build": {
     "builder": "dotnet",
     "dotnet": {
-      // ¬казуЇмо шл€х до папки з файлом .csproj
       "projectPath": "./CarSharing.API"
     }
   }
