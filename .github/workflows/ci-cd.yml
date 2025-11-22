@@ -22,11 +22,11 @@ jobs:
         run: npm install -g @railway/cli
 
       # 3. Прив'язка до Сервісу
-      # ПЕРЕДАЄМО ЗНАЧЕННЯ СЕКРЕТУ ТУТ:
+      # Тут має бути точний синтаксис secrets.RAILWAY_SERVICE_ID
       - name: Link to Service ID
-        run: railway link --service ${{ secrets.RAILWAY_SERVICE_ID }} 
+        run: railway link --service ${{ secrets.RAILWAY_SERVICE_ID }}
         env:
-          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }} 
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
           
       # 4. Деплой
       - name: Deploy to Railway
