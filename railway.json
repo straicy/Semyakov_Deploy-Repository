@@ -4,7 +4,9 @@
     "builder": "nixpacks",
     "nixpacks": {
       "phases": {
-        "build": "dotnet publish CarSharing.API/CarSharing.API.csproj -c Release -o /app/publish"
+        "install": "dotnet restore ./CarSharing.API/CarSharing.API.csproj",
+        
+        "build": "dotnet publish ./CarSharing.API/CarSharing.API.csproj -c Release -o /app/publish"
       },
       "start": "dotnet /app/publish/CarSharing.API.dll"
     }
