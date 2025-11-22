@@ -11,10 +11,11 @@ jobs:
     steps:
     - uses: actions/checkout@v4 # 1. Витягуємо код
     
-    # 2. Використовуємо Railway CLI для запуску деплою
+    # 2. Використовуємо актуальну Railway Action (замість застарілої cli-action)
     - name: Deploy to Railway
-      uses: railwayapp/cli-action@v3
+      uses: railwayapp/railway-action@v3 # Використовуємо актуальний Action
       with:
-        # Токен та ID беруться з секретів GitHub
-        token: ${{ secrets.RAILWAY_TOKEN }} 
-        project_id: ${{ secrets.RAILWAY_PROJECT_ID }}
+        # railwayToken: оновлена назва параметра
+        railwayToken: ${{ secrets.RAILWAY_TOKEN }}
+        # projectId: оновлена назва параметра
+        projectId: ${{ secrets.RAILWAY_PROJECT_ID }}
