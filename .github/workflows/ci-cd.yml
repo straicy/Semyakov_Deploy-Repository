@@ -13,7 +13,7 @@ jobs:
     
     # 2. Використовуємо Railway CLI для запуску деплою
     - name: Deploy to Railway
-      uses: railwayapp/cli-action@v3.4.0
+      uses: railwayapp/cli-action@v3
       with:
         # Токен та ID беруться з секретів GitHub
         token: ${{ secrets.RAILWAY_TOKEN }} 
