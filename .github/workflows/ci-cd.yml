@@ -1,9 +1,9 @@
 # .github/workflows/ci-cd.yml
-name: Railway CD Pipeline (CLI Method)
+name: Railway CD Pipeline (CLI Final Attempt)
 
 on:
   push:
-    branches: [ "main" ] # Запускаємо при пуші в гілку main
+    branches: [ "main" ]
 
 jobs:
   deploy:
@@ -17,25 +17,16 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20' # Використовуємо стабільну LTS версію Node.js
+          node-version: '20'
 
       # 2. Встановлення Railway CLI глобально
       - name: Install Railway CLI
         run: npm install -g @railway/cli
 
-      # 3. Прив'язка репозиторію до проекту (вирішення помилки "Project Token not found")
-      - name: Link Repository to Project ID
-        run: railway link ${{ secrets.RAILWAY_PROJECT_ID }}
-        env:
-          # Використовуємо свій свіжий токен для автентифікації
-          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }} 
-
-      # 4. Деплой за допомогою CLI
+      # 3. Деплой за допомогою CLI
+      # Використовуємо лише 'up --ci' та передаємо обидва секрета через env
       - name: Deploy to Railway
         run: railway up --ci
         env:
-          # Токен облікового запису
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
-          # Тут ID проекту вже не потрібен, оскільки ми його "підключили" на попередньому кроці, 
-          # але для додаткової надійності його можна залишити.
-          # RAILWAY_PROJECT_ID: ${{ secrets.RAILWAY_PROJECT_ID }}
+          RAILWAY_PROJECT_ID: ${{ secrets.RAILWAY_PROJECT_ID }}
