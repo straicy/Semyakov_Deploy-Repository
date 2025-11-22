@@ -1,26 +1,33 @@
 # .github/workflows/ci-cd.yml
-name: Railway CD Pipeline
+name: Railway CD Pipeline (CLI Method)
 
 on:
   push:
-    branches: [ "main" ] # Використовуйте "main", оскільки ти його використовуєш
+    branches: [ "main" ]
 
 jobs:
-  deploy_to_railway:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v4 # 1. Витягуємо код
+        uses: actions/checkout@v4
 
-      # Кроки Setup .NET та Install Railway CLI ВИКЛЮЧЕНІ, 
-      # оскільки ми використовуємо офіційний Action для Docker деплою
-      
-      - name: Deploy to Railway (via Dockerfile)
-        # Використовуємо найстабільнішу версію Railway Action
-        uses: railwayapp/railway-action@v3 
+      # 1. Налаштування Node.js для встановлення CLI
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          # Секрети, які ти вже налаштував:
-          railwayToken: ${{ secrets.RAILWAY_TOKEN }}
-          projectId: ${{ secrets.RAILWAY_PROJECT_ID }}
-          # НЕ ТРЕБА ВКАЗУВАТИ SERVICE_ID або DOMAIN, Action знайде це сам
+          node-version: '20'
+
+      # 2. Встановлення Railway CLI глобально
+      - name: Install Railway CLI
+        run: npm install -g @railway/cli
+
+      # 3. Деплой за допомогою CLI
+      # Railway автоматично знайде Dockerfile і виконає білд.
+      - name: Deploy to Railway
+        run: railway up --ci
+        env:
+          # Використовуємо секрети для автентифікації
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+          # RAILWAY_PROJECT_ID не потрібен для 'railway up'
