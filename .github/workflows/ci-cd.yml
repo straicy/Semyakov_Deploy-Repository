@@ -24,10 +24,11 @@ jobs:
         run: npm install -g @railway/cli
 
       # 3. Деплой за допомогою CLI
-      # Railway автоматично знайде Dockerfile і виконає білд.
+      # Тепер передаємо Project ID, щоб CLI знайшов цільовий проект.
       - name: Deploy to Railway
         run: railway up --ci
         env:
-          # Використовуємо секрети для автентифікації
+          # Токен облікового запису
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
-          # RAILWAY_PROJECT_ID не потрібен для 'railway up'
+          # ID проекту для CI/CD
+          RAILWAY_PROJECT_ID: ${{ secrets.RAILWAY_PROJECT_ID }} # <--- ДОДАНО
